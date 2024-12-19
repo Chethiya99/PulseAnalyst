@@ -156,8 +156,8 @@ if uploaded_file is not None:
     )
 
     write_report = Task(
-        description="Write an executive summary of the analysis in less than 100 words.",
-        expected_output="{'summary': 'Markdown report text'}",
+        description="Write an executive summary of the analysis.",
+        expected_output="Markdown report text",
         agent=report_writer,
         context=[analyze_data],
     )
@@ -174,14 +174,15 @@ if uploaded_file is not None:
     query = st.text_input("Enter your query:")
     if st.button("Run Query"):
         inputs = {"query": query}
-        result = crew.kickoff(inputs=inputs)
-
-        # Convert the result to JSON-safe format
         try:
+            result = crew.kickoff(inputs=inputs)
+
             st.write("### Result")
-            if isinstance(result, str):
-                st.json({"output": result})
-            else:
+            if isinstance(result, dict):
                 st.json(result)
+            elif isinstance(result, str):
+                st.markdown(result)
+            else:
+                st.write(result)
         except Exception as e:
-            st.error(f"Error displaying result: {str(e)}")
+            st.error(f"An error occurred: {e}")
