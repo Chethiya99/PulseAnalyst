@@ -23,8 +23,8 @@ from langchain_community.utilities.sql_database import SQLDatabase
 from langchain_core.callbacks.base import BaseCallbackHandler
 from langchain_groq import ChatGroq
 
-# Replace 'sqlite3' with 'pysqlite3'
-sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
+# # Replace 'sqlite3' with 'pysqlite3'
+# sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
 
 # Streamlit page config
 st.set_page_config(
