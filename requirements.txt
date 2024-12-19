@@ -2,3 +2,4 @@ langchain==0.1.10
 crewai[tools]==0.32.0
 langchain-groq==0.1.5
 langchain-community
+pysqlite3
