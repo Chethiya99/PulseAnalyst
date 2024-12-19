@@ -1,7 +1,8 @@
 import os
 import json
 
-import sqlite3
+import pysqlite3 as sqlite3
+
 from pathlib import Path
 from datetime import datetime, timezone
 from dataclasses import asdict, dataclass
