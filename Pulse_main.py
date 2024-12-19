@@ -1,12 +1,7 @@
 import os
 import json
-
 import pysqlite3 as sqlite3
-__import__('pysqlite3')
 import sys
-sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
-
-
 from pathlib import Path
 from datetime import datetime, timezone
 from dataclasses import asdict, dataclass
@@ -27,6 +22,9 @@ from langchain_community.tools.sql_database.tool import (
 from langchain_community.utilities.sql_database import SQLDatabase
 from langchain_core.callbacks.base import BaseCallbackHandler
 from langchain_groq import ChatGroq
+
+# Replace 'sqlite3' with 'pysqlite3'
+sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
 
 # Streamlit page config
 st.set_page_config(
@@ -84,19 +82,31 @@ if uploaded_file is not None:
 
     @tool("list_tables")
     def list_tables() -> str:
+        """
+        Lists all the tables in the SQLite database.
+        """
         return ListSQLDatabaseTool(db=db).invoke("")
 
     @tool("tables_schema")
     def tables_schema(tables: str) -> str:
+        """
+        Retrieves the schema information for the specified tables in the database.
+        """
         tool = InfoSQLDatabaseTool(db=db)
         return tool.invoke(tables)
 
     @tool("execute_sql")
     def execute_sql(sql_query: str) -> str:
+        """
+        Executes the given SQL query on the database and returns the result.
+        """
         return QuerySQLDataBaseTool(db=db).invoke(sql_query)
 
     @tool("check_sql")
     def check_sql(sql_query: str) -> str:
+        """
+        Checks the correctness of the given SQL query using the LLM.
+        """
         return QuerySQLCheckerTool(db=db, llm=llm).invoke({"query": sql_query})
 
     sql_dev = Agent(
