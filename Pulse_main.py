@@ -1,5 +1,5 @@
-#import os
-#import json
+import os
+import json
 
 #import pysqlite3 as sqlite3
 __import__('pysqlite3')
